@@ -60,7 +60,6 @@
                         "Version" "2009-03-31",
                         "ResponseGroup" "Small"}
         params (conj default-params params)
-        builder (.newDocumentBuilder (DocumentBuilderFactory/newInstance))
         ]
     (sign requester params)))
 

@@ -36,7 +36,7 @@
 (defn timestamp []
   "Generate a ISO-8601 format timestamp as required by Amazon."
   (.format (doto (SimpleDateFormat. "yyyy-MM-dd'T'HH:mm:ss'Z'")
-             (.setTimeZone (java.util.TimeZone/getTimeZone "GMT")))
+             (.setTimeZone (TimeZone/getTimeZone "GMT")))
            (.getTime (Calendar/getInstance))))
 
 (defn create-parameter-map #^Map [#^String query]
