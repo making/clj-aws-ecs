@@ -44,11 +44,8 @@
   (let [pairs (.split query "&")]
     (apply hash-map 
            (reduce into
-                   (filter not-empty 
-                           (for [pair pairs]
-                             (when (not-empty pair)
-                               (let [tokens (map #(URLDecoder/decode % UTF8_CHARSET) (.split pair "=" 2))]
-                                 (condp = (count tokens)
-                                   1 (if (= (first pair) \=) ["" (first tokens)] [(first tokens) ""])
-                                   2 (vec tokens))
-                                 ))))))))
+                   (for [pair pairs :when (not-empty pair)]
+                     (let [tokens (map #(URLDecoder/decode % UTF8_CHARSET) (.split pair "=" 2))]
+                       (condp = (count tokens)
+                         1 (if (= (first pair) \=) ["" (first tokens)] [(first tokens) ""])
+                         2 (vec tokens))))))))
