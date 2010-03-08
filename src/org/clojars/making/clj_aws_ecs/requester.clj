@@ -3,7 +3,6 @@
            (java.text DateFormat SimpleDateFormat)
            (java.util Calendar Map SortedMap TimeZone TreeMap)
            (javax.crypto Mac)
-           (javax.crypto.spec SecretKeySpec)
            (org.apache.commons.codec.binary Base64)
            )
   (:use [clojure.contrib.str-utils :only (str-join)])
@@ -49,3 +48,26 @@
                        (condp = (count tokens)
                          1 (if (= (first pair) \=) ["" (first tokens)] [(first tokens) ""])
                          2 (vec tokens))))))))
+
+
+(defmulti sign (fn [x y] (class y)))
+
+(defmethod sign Map
+  [requester #^Map params] 
+  "This method signs requests in hashmap form. It returns a URL that should
+   be used to fetch the response. The URL returned should not be modified in
+   any way, doing so will invalidate the signature and Amazon will reject
+   the request."
+  (let [sorted-param (TreeMap. (conj {"AWSAccessKeyId" (:access-key-id requester),
+                                      "Timestamp" (timestamp)
+                                      } params))
+        canonical-query (canonicalize sorted-param)
+        to-sign (str-join "\n" (list REQUEST_METHOD (:endpoint requester) REQUEST_URI canonical-query))
+        hmac (hmac (:mac requester) to-sign)
+        sig (percent-encode-rfc3986 hmac)
+        ]
+    (str "http://" (:endpoint requester) REQUEST_URI "?" canonical-query "&Signature=" sig)))
+
+(defmethod sign String
+  [requester #^String query] 
+  (sign requester (create-parameter-map query)))
