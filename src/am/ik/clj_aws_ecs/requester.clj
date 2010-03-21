@@ -1,12 +1,10 @@
-(ns org.clojars.making.clj-aws-ecs.requester
+(ns am.ik.clj-aws-ecs.requester
   (:import (java.net URLDecoder URLEncoder)
            (java.text DateFormat SimpleDateFormat)
            (java.util Calendar Map SortedMap TimeZone TreeMap)
            (javax.crypto Mac)
-           (org.apache.commons.codec.binary Base64)
-           )
-  (:use [clojure.contrib.str-utils :only (str-join)])
-  )
+           (org.apache.commons.codec.binary Base64))
+  (:use [clojure.contrib.str-utils :only (str-join)]))
 
 (def UTF8_CHARSET "UTF-8")
 (def HMAC_SHA256_ALGORITHM "HmacSHA256")

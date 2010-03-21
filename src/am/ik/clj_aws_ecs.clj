@@ -1,16 +1,16 @@
-(ns org.clojars.making.clj-aws-ecs
+(ns am.ik.clj-aws-ecs
   (:import (javax.xml.parsers DocumentBuilder DocumentBuilderFactory)
            (javax.crypto Mac)
-           (javax.crypto.spec SecretKeySpec)
-           )
+           (javax.crypto.spec SecretKeySpec))
   (:require [clojure.xml :as xml])
   (:use [clojure.contrib.str-utils :only (str-join)]
-        org.clojars.making.clj-aws-ecs.requester
-        )
-  )
+        am.ik.clj-aws-ecs.requester))
 
-(defn make-requester [endpoint  access-key-id secret-key]
-  ""
+(defn make-requester   
+  [endpoint access-key-id secret-key]
+  "make requester
+  (make-requester \"ecs.amazonaws.jp\" \"YOUR-ACCESS-KEY-ID\" \"YOUR-ACCESS-SECRET-KEY\")
+  "
   (let [secret-key-bytes (.getBytes secret-key UTF8_CHARSET)
         secret-key-spec (SecretKeySpec. secret-key-bytes HMAC_SHA256_ALGORITHM)
         mac (Mac/getInstance HMAC_SHA256_ALGORITHM)]
@@ -26,8 +26,7 @@
        (xml/parse (apply ~uri-fname args#)))
      (defn ~(symbol (str fname "-doc")) [& args#]
        (let [builder# (.newDocumentBuilder (DocumentBuilderFactory/newInstance))]
-         (.parse builder# (apply ~uri-fname args#)))))
-  ))
+         (.parse builder# (apply ~uri-fname args#)))))))
 
 (defn item-request-uri [requester params]
   (let [default-params {"Service" "AWSECommerceService",
