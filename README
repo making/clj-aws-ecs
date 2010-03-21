@@ -4,7 +4,7 @@ Clojure Client Library for Amazon Product Advertising API
 
 ## Usage
 
-user=> (use 'org.clojars.making.clj-aws-ecs)
+user=> (use 'am.ik.clj-aws-ecs)
 user=> (def requester (make-requester "ecs.amazonaws.jp" "YOUR-ACCESS-KEY-ID" "YOUR-ACCESS-SECRET-KEY"))
 user=> (def requester (make-requester "ecs.amazonaws.jp" "YOUR-ACCESS-KEY-ID" "YOUR-ACCESS-SECRET-KEY"))
 ;; lookup
@@ -17,7 +17,7 @@ user=> (item-search-doc requester "Books" "Clojure")
 
 ## Installation
 add
-[org.clojars.making/clj-aws-ecs "1.0.0-SNAPSHOT"]
+[am.ik/clj-aws-ecs "0.1.0-SNAPSHOT"]
 to your project.clj
 
 ## License
