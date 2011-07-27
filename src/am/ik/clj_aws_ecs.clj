@@ -30,8 +30,9 @@
 
 (defn item-request-uri [requester params]
   (let [default-params {"Service" "AWSECommerceService",
-                        "Version" "2009-03-31",
-                        "ResponseGroup" "Small"}
+                        "Version" "2011-08-01",
+                        "ResponseGroup" "Small",
+                        "AssociateTag" "ikam-22"}
         params (conj default-params params)
         ]
     (sign requester params)))
